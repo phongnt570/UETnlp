@@ -1,0 +1,16 @@
+<configuration>
+	<language>vietnamese</language>
+
+	<reader type="raw">
+		<column index="1" field="form" />
+	</reader>
+
+	<global>
+		<distributional_semantics>clusters.vi.obj.txt.xz</distributional_semantics>
+	</global>
+
+	<model>
+		<pos>viet-pos.xz</pos>
+	</model>
+
+</configuration>
