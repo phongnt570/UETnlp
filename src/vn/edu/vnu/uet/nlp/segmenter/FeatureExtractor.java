@@ -63,7 +63,7 @@ public class FeatureExtractor {
 		for (int i = 0; i < sentences.size(); i++) {
 			extract(sentences.get(i), mode);
 			if (i % 1000 == 999 || i == sentences.size() - 1) {
-				Logging.info((i + 1) + " sentences extracted to features");
+				Logging.LOG.info((i + 1) + " sentences extracted to features");
 			}
 
 		}

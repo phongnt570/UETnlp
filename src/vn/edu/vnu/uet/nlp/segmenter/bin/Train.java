@@ -11,6 +11,9 @@ import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.List;
 
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+
 import vn.edu.vnu.uet.nlp.segmenter.Configure;
 import vn.edu.vnu.uet.nlp.segmenter.FeatureExtractor;
 import vn.edu.vnu.uet.nlp.segmenter.SegmentationSystem;
@@ -41,7 +44,7 @@ public class Train {
 
 		FeatureExtractor fe = new FeatureExtractor();
 
-		Logging.info("extracting features...");
+		Logging.LOG.info("extracting features...");
 		String line = null;
 		int cnt = 0;
 
@@ -79,11 +82,11 @@ public class Train {
 	 */
 	private static void trainFolder(String trainingFolder, String ext, String modelsPath) {
 		FeatureExtractor fe = new FeatureExtractor();
-		Logging.info("extracting features...");
+		Logging.LOG.info("extracting features...");
 
 		File folder = new File(trainingFolder);
 		if (!folder.isDirectory()) {
-			Logging.error(folder + " is not a valid directory.");
+			Logging.LOG.error(folder + " is not a valid directory.");
 			return;
 		}
 
@@ -92,7 +95,7 @@ public class Train {
 		for (File file : files) {
 			String filePath = file.getPath();
 			if (file.isFile()) {
-				if (ext.equals("*") || filePath.endsWith("." + ext)) {
+				if (ext.equals("*") || filePath.endsWith(ext)) {
 					System.out.println("File:\t" + filePath + "\n");
 					List<String> dataLines = null;
 					try {
@@ -128,51 +131,27 @@ public class Train {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int length = args.length;
+		TrainOption option = new TrainOption();
+		CmdLineParser parser = new CmdLineParser(option);
 
-		if (length != 4 && length != 6) {
-			showHelp();
+		if (args.length < 4) {
+			System.out.println(Train.class.getName() + " [options...] [arguments..]");
+			parser.printUsage(System.out);
 			return;
 		}
 
-		if (!(args[0].equals("-i") && args[length - 2].equals("-m"))) {
-			showHelp();
-			return;
-		}
+		try {
+			parser.parseArgument(args);
 
-		if (length == 6) {
-			if (!args[2].equals("-e")) {
-				showHelp();
-				return;
+			if (option.inFile.isFile()) {
+				train(option.inFile.getPath(), option.modelsPath.getPath());
+			} else if (option.inFile.isDirectory()) {
+				trainFolder(option.inFile.getPath(), option.ext, option.modelsPath.getPath());
 			}
-
-			trainFolder(args[1], args[3], args[5]);
+		} catch (CmdLineException e) {
+			System.out.println(Train.class.getName() + " [options...] [arguments..]");
+			e.printStackTrace();
 		}
-
-		if (length == 4) {
-			File f = new File(args[1]);
-			if (f.isDirectory()) {
-				trainFolder(args[1], "*", args[3]);
-			}
-
-			if (f.isFile()) {
-				train(args[1], args[3]);
-			}
-		}
-	}
-
-	protected static void showHelp() {
-		System.out.println("Method for training a new model. Needed arguments:\n");
-
-		System.out.println("-i <training_data> [-e <file_extension>] -m <models_path>" + "\n");
-
-		System.out.println("\t" + "-i" + "\t" + ":" + "\t" + "path to the training data (file/folder) (required)");
-		System.out.println("\t" + "-e" + "\t" + ":" + "\t"
-				+ "file extension, only use when training_data is a folder (default: *)");
-		System.out.println("\t" + "-m" + "\t" + ":" + "\t"
-				+ "path to the folder you want to save models after training (required)");
-
-		System.out.println();
 	}
 
 }

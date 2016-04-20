@@ -3,6 +3,9 @@ package vn.edu.vnu.uet.nlp.segmenter.bin;
 import java.io.IOException;
 import java.util.List;
 
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+
 import vn.edu.vnu.uet.nlp.segmenter.SegmentationSystem;
 import vn.edu.vnu.uet.nlp.utils.FileUtils;
 
@@ -44,28 +47,22 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		TestOption option = new TestOption();
+		CmdLineParser parser = new CmdLineParser(option);
+
 		if (args.length != 4) {
-			showHelp();
+			System.out.println(Test.class.getName() + " [arguments..]");
+			parser.printUsage(System.out);
 			return;
 		}
 
-		if (!(args[0].equals("-m") && args[2].equals("-t"))) {
-			showHelp();
-			return;
+		try {
+			parser.parseArgument(args);
+			test(option.modelsPath.getPath(), option.inFile.getPath());
+		} catch (CmdLineException e) {
+			System.out.println(Test.class.getName() + " [arguments..]");
+			e.printStackTrace();
 		}
-
-		test(args[1], args[3]);
-	}
-
-	protected static void showHelp() {
-		System.out.println("Method for testing a model. Needed arguments:\n");
-
-		System.out.println("-m <models_path> -t <test_file>" + "\n");
-
-		System.out.println("\t" + "-m" + "\t" + ":" + "\t" + "path to the folder of segmenter models (required)");
-		System.out.println("\t" + "-t" + "\t" + ":" + "\t" + "path to the test file (required)");
-
-		System.out.println();
 	}
 
 }

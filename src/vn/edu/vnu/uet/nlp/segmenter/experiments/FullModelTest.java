@@ -19,7 +19,7 @@ import vn.edu.vnu.uet.nlp.utils.Logging;
 public class FullModelTest {
 
 	public static void main(String[] args) throws IOException {
-		Logging.info("loading model...");
+		Logging.LOG.info("loading model...");
 		SegmentationSystem machine = null;
 		try {
 			machine = new SegmentationSystem("original_models");
@@ -27,7 +27,7 @@ public class FullModelTest {
 			e.printStackTrace();
 		}
 
-		Logging.info("testing...");
+		Logging.LOG.info("testing...");
 		List<String> dataLines = FileUtils.readFile("raw/independent-test-100sentences.seg");
 		List<String> lines = new ArrayList<String>();
 

@@ -29,7 +29,7 @@ public class FullTrain {
 
 		FeatureExtractor fe = new FeatureExtractor();
 
-		Logging.info("extracting features...");
+		Logging.LOG.info("extracting features...");
 
 		Files.walk(Paths.get(directory)).forEach(filePath -> {
 			if (Files.isRegularFile(filePath)) {

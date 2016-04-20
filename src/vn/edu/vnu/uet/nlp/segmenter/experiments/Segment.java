@@ -25,7 +25,7 @@ public class Segment {
 
 		List<String> dataLines = FileUtils.readFile(filename);
 
-		Logging.info("loading model...");
+		Logging.LOG.info("loading model...");
 		SegmentationSystem machine = null;
 		try {
 			machine = new SegmentationSystem("models");
@@ -33,7 +33,7 @@ public class Segment {
 			e.printStackTrace();
 		}
 
-		Logging.info("segmenting...");
+		Logging.LOG.info("segmenting...");
 		List<String> tokens = new ArrayList<String>();
 		List<String> sentences = new ArrayList<String>();
 
@@ -69,10 +69,10 @@ public class Segment {
 
 		double difference = (end_time - start_time) / 1e9;
 
-		Logging.info("Tokens: " + numTokens);
-		Logging.info("Sentences: " + numSentences);
-		Logging.info("Time: " + difference + " seconds");
-		Logging.info("Rate: " + numTokens / difference + " tokens/sec");
+		Logging.LOG.info("Tokens: " + numTokens);
+		Logging.LOG.info("Sentences: " + numSentences);
+		Logging.LOG.info("Time: " + difference + " seconds");
+		Logging.LOG.info("Speed: " + numTokens / difference + " tokens/sec");
 	}
 
 }

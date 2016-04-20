@@ -15,7 +15,7 @@ import vn.edu.vnu.uet.nlp.utils.Logging;
 public class Test {
 
 	public static void main(String[] args) throws IOException {
-		Logging.info("loading model...");
+		Logging.LOG.info("loading model...");
 		String fold = "0";
 		SegmentationSystem machine = null;
 		try {
@@ -24,7 +24,7 @@ public class Test {
 			e.printStackTrace();
 		}
 
-		Logging.info("testing...");
+		Logging.LOG.info("testing...");
 		List<String> dataLines = FileUtils.readFile("data/test_" + fold + ".txt");
 
 		try {

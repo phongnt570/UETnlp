@@ -106,23 +106,23 @@ public class SegmentationSystem {
 	 * Training the logistic regression classifier.
 	 */
 	public void train() {
-		Logging.info("saving feature map");
+		Logging.LOG.info("saving feature map");
 		saveMap();
 
-		Logging.info("clear the map to free memory");
+		Logging.LOG.info("clear the map to free memory");
 		fe.clearMap();
 
-		Logging.info("setting up the problem");
+		Logging.LOG.info("setting up the problem");
 		setProblem();
 
-		Logging.info("start training");
+		Logging.LOG.info("start training");
 		model = Linear.train(problem, parameter);
-		Logging.info("finish training");
+		Logging.LOG.info("finish training");
 
-		Logging.info("saving model");
+		Logging.LOG.info("saving model");
 		saveModel();
 
-		Logging.info("finish.");
+		Logging.LOG.info("finish.");
 	}
 
 	/**
@@ -170,18 +170,18 @@ public class SegmentationSystem {
 		double rec = result.getRecall();
 		double f_measure = result.getF1Score();
 
-		Logging.info("\n" + "Number of words recognized by the system:\t\t\t\tN1 = " + N1
+		Logging.LOG.info("\n" + "Number of words recognized by the system:\t\t\t\tN1 = " + N1
 				+ "\nNumber of words in reality appearing in the corpus:\t\tN2 = " + N2
 				+ "\nNumber of words that are correctly recognized by the system:\tN3 = " + N3 + "\n");
-		Logging.info("Precision\t\tP = N3/N1\t\t=\t" + pre + "%");
-		Logging.info("Recall\t\tR = N3/N2\t\t=\t" + rec + "%");
-		Logging.info("\nF-Measure\t\tF = (2*P*R)/(P+R)\t=\t" + f_measure + "%\n");
+		Logging.LOG.info("Precision\t\tP = N3/N1\t\t=\t" + pre + "%");
+		Logging.LOG.info("Recall\t\tR = N3/N2\t\t=\t" + rec + "%");
+		Logging.LOG.info("\nF-Measure\t\tF = (2*P*R)/(P+R)\t=\t" + f_measure + "%\n");
 
-		Logging.info("\nNumber of sentences:\t" + sentences.size());
-		Logging.info("Sentences right:\t\t" + sentCnt);
-		Logging.info("\nSentences right accuracy:\t" + (double) sentCnt / (double) sentences.size() * 100.0 + "%");
+		Logging.LOG.info("\nNumber of sentences:\t" + sentences.size());
+		Logging.LOG.info("Sentences right:\t\t" + sentCnt);
+		Logging.LOG.info("\nSentences right accuracy:\t" + (double) sentCnt / (double) sentences.size() * 100.0 + "%");
 
-		Logging.info("\nLogged wrong predictions to " + logName);
+		Logging.LOG.info("\nLogged wrong predictions to " + logName);
 
 		return result;
 	}

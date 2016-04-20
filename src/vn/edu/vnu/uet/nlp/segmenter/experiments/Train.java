@@ -29,7 +29,7 @@ public class Train {
 
 		FeatureExtractor fe = new FeatureExtractor();
 
-		Logging.info("extracting features...");
+		Logging.LOG.info("extracting features...");
 		String line = null;
 		int cnt = 0;
 		while ((line = br.readLine()) != null) {

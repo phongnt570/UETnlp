@@ -1,40 +1,36 @@
 package vn.edu.vnu.uet.nlp.utils;
 
-import java.util.Date;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
 
 /**
  * @author tuanphong94
  *
  */
 public class Logging {
-	private static void log(String mes, String type) {
-		String lines[] = mes.split("\\r?\\n");
-		for (String line : lines) {
-			if (!line.isEmpty())
-				if (type.equals("error")) {
-					System.err.println(new Date() + " : " + type.toUpperCase() + " : " + line);
-				} else {
-					System.out.println(new Date() + " : " + type.toUpperCase() + " : " + line);
-				}
+	static {
+		BasicConfigurator.configure();
+	}
+
+	private Logging() {
+	}
+
+	public static final Logger LOG = Logger.getLogger(Logging.class);
+
+	static public void initArgs(String[] args, Object bean) {
+
+		CmdLineParser cmd = new CmdLineParser(bean);
+
+		try {
+			cmd.parseArgument(args);
+		} catch (CmdLineException e) {
+			System.err.println(e.getMessage());
+			cmd.printUsage(System.err);
+			System.exit(1);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Print to the screen the message with time and tag "INFO".
-	 * 
-	 * @param mes
-	 */
-	public static void info(String mes) {
-		log(mes, "info");
-	}
-
-	/**
-	 * Print to the screen the message with time and tag "ERROR".
-	 * 
-	 * @param mes
-	 */
-	public static void error(String mes) {
-		log(mes, "error");
-	}
-
 }

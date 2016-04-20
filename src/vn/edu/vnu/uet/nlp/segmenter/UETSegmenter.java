@@ -2,11 +2,12 @@ package vn.edu.vnu.uet.nlp.segmenter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import edu.emory.clir.clearnlp.util.BinUtils;
 import vn.edu.vnu.uet.nlp.tokenizer.StringConst;
 import vn.edu.vnu.uet.nlp.tokenizer.Tokenizer;
+import vn.edu.vnu.uet.nlp.utils.Logging;
 
 /**
  * The main class provides APIs for word segmentation
@@ -14,7 +15,7 @@ import vn.edu.vnu.uet.nlp.tokenizer.Tokenizer;
  * @author tuanphong94
  */
 public class UETSegmenter {
-	private final static String defaultModels = "resources/segmenterModel";
+	private final static String defaultModels = "resources/segmenter/models";
 
 	private SegmentationSystem machine = null;
 
@@ -24,7 +25,7 @@ public class UETSegmenter {
 
 	public UETSegmenter(String modelpath) {
 		if (machine == null) {
-			BinUtils.LOG.info("Loading segmenter model.\n");
+			Logging.LOG.info("Loading segmenter model.\n");
 			try {
 				machine = new SegmentationSystem(modelpath);
 			} catch (ClassNotFoundException | IOException e) {
@@ -39,7 +40,23 @@ public class UETSegmenter {
 	 * @return Segmented text
 	 */
 	public String segmentTokenizedText(String str) {
-		return machine.segment(str);
+		StringBuffer sb = new StringBuffer();
+
+		List<String> tokens = new ArrayList<String>();
+		List<String> sentences = new ArrayList<String>();
+
+		tokens.addAll(Arrays.asList(str.split("\\s+")));
+		sentences = Tokenizer.joinSentences(tokens);
+
+		for (String sentence : sentences) {
+			sb.append((machine.segment(sentence)));
+			sb.append(StringConst.SPACE);
+		}
+
+		tokens.clear();
+		sentences.clear();
+
+		return sb.toString().trim();
 	}
 
 	/**
