@@ -170,18 +170,19 @@ public class SegmentationSystem {
 		double rec = result.getRecall();
 		double f_measure = result.getF1Score();
 
-		Logging.LOG.info("\n" + "Number of words recognized by the system:\t\t\t\tN1 = " + N1
+		System.out.println("\n" + "Number of words recognized by the system:\t\t\t\tN1 = " + N1
 				+ "\nNumber of words in reality appearing in the corpus:\t\tN2 = " + N2
 				+ "\nNumber of words that are correctly recognized by the system:\tN3 = " + N3 + "\n");
-		Logging.LOG.info("Precision\t\tP = N3/N1\t\t=\t" + pre + "%");
-		Logging.LOG.info("Recall\t\tR = N3/N2\t\t=\t" + rec + "%");
-		Logging.LOG.info("\nF-Measure\t\tF = (2*P*R)/(P+R)\t=\t" + f_measure + "%\n");
+		System.out.println("Precision\t\tP = N3/N1\t\t=\t" + pre + "%");
+		System.out.println("Recall\t\tR = N3/N2\t\t=\t" + rec + "%");
+		System.out.println("\nF-Measure\t\tF = (2*P*R)/(P+R)\t=\t" + f_measure + "%\n");
 
-		Logging.LOG.info("\nNumber of sentences:\t" + sentences.size());
-		Logging.LOG.info("Sentences right:\t\t" + sentCnt);
-		Logging.LOG.info("\nSentences right accuracy:\t" + (double) sentCnt / (double) sentences.size() * 100.0 + "%");
+		System.out.println("\nNumber of sentences:\t" + sentences.size());
+		System.out.println("Sentences right:\t\t" + sentCnt);
+		System.out
+				.println("\nSentences right accuracy:\t" + (double) sentCnt / (double) sentences.size() * 100.0 + "%");
 
-		Logging.LOG.info("\nLogged wrong predictions to " + logName);
+		System.out.println("\nLogged wrong predictions to " + logName);
 
 		return result;
 	}
@@ -403,18 +404,17 @@ public class SegmentationSystem {
 						i = j - 1;
 						break;
 					}
+					// if (mode != Configure.TEST) {
+					if (hasUpper && RareNames.isRareName(word)) {
 
-					if (mode != Configure.TEST) {
-						if (hasUpper && RareNames.isRareName(word)) {
-
-							for (int k = i; k < j - 1; k++) {
-								predictions[k] = Configure.UNDERSCORE;
-							}
-
-							i = j - 1;
-							break;
+						for (int k = i; k < j - 1; k++) {
+							predictions[k] = Configure.UNDERSCORE;
 						}
+
+						i = j - 1;
+						break;
 					}
+					// }
 				}
 			}
 		}
@@ -639,6 +639,9 @@ public class SegmentationSystem {
 	}
 
 	public void setR(double r) {
+		if (r < 0 || r > 0.5) {
+			return;
+		}
 		SegmentationSystem.r = r;
 	}
 }

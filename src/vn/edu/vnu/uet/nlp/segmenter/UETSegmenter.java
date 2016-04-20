@@ -117,4 +117,14 @@ public class UETSegmenter {
 		return result;
 	}
 
+	/**
+	 * Change threshold r for post-processing
+	 * 
+	 * @param r
+	 *            threshold r
+	 */
+	public void setR(double r) {
+		this.machine.setR(r);
+	}
+
 }

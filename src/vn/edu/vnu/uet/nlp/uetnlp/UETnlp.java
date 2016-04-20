@@ -187,4 +187,14 @@ public class UETnlp {
 
 		return results;
 	}
+
+	/**
+	 * Change threshold r for post-processing
+	 * 
+	 * @param r
+	 *            threshold r
+	 */
+	public void setR(double r) {
+		this.segmenter.setR(r);
+	}
 }

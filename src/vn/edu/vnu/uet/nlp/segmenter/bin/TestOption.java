@@ -12,5 +12,5 @@ public class TestOption {
 	File inFile;
 
 	@Option(name = "-r", usage = "threshold r (default: 0.33)")
-	double r;
+	double r = 0.33;
 }
