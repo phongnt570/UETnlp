@@ -19,13 +19,14 @@ public class Test {
 	 * @param modelsPath
 	 * @param testSet
 	 */
-	private static void test(String modelsPath, String testSet) {
+	private static void test(String modelsPath, String testSet, double r) {
 		System.out.println("Models path:\t" + modelsPath);
 		SegmentationSystem machine = null;
 
 		try {
 			System.out.println("Load model...\n");
 			machine = new SegmentationSystem(modelsPath);
+			machine.setR(r);
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 			return;
@@ -50,15 +51,15 @@ public class Test {
 		TestOption option = new TestOption();
 		CmdLineParser parser = new CmdLineParser(option);
 
-		if (args.length != 4) {
-			System.out.println(Test.class.getName() + " [arguments..]");
+		if (args.length < 4) {
+			System.out.println(Test.class.getName() + " [options...] [arguments..]");
 			parser.printUsage(System.out);
 			return;
 		}
 
 		try {
 			parser.parseArgument(args);
-			test(option.modelsPath.getPath(), option.inFile.getPath());
+			test(option.modelsPath.getPath(), option.inFile.getPath(), option.r);
 		} catch (CmdLineException e) {
 			System.out.println(Test.class.getName() + " [arguments..]");
 			e.printStackTrace();
