@@ -1,5 +1,5 @@
 # UETnlp
-UETnlp is an open-source toolkit written in Java and developed with Esclipse IDE. This toolkit supports 4 steps for Vietnamese language processing in a pepline: tokenization, sentence segmentation, word segmentation, part-of-speech tagging. The word segmenter is integrated from [UETsegmenter](../UETsegmenter).
+UETnlp is an open-source toolkit written in Java and developed with Esclipse IDE. This toolkit supports 4 steps for Vietnamese language processing in a pepline: tokenization, sentence segmentation, word segmentation, part-of-speech tagging. The word segmenter is integrated from [UETsegmenter](https://github.com/phongnt570/UETsegmenter).
 
 ## How to use
 
