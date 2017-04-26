@@ -1,5 +1,6 @@
 package vn.edu.vnu.uet.nlp.uetnlp.bin;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.util.ArrayList;
@@ -33,22 +34,25 @@ public class Execute {
 
 			if (option.inFile.isFile()) {
 				Logging.LOG.info(option.inFile);
+				String filePath = option.inFile.getPath();
+				BufferedReader br = FileUtils.newUTF8BufferedReaderFromFile(filePath);
+				BufferedWriter bw = FileUtils.newUTF8BufferedWriterFromNewFile(filePath + ".uet");
 
-				List<String> lines = FileUtils.readFile(option.inFile.getPath());
-				List<String> results = new ArrayList<String>();
-				for (String line : lines) {
-					results.add(pepline.process(line));
-				}
-
-				BufferedWriter bw = FileUtils.newUTF8BufferedWriterFromNewFile(option.inFile.getPath() + ".uet");
-
-				for (int i = 0; i < results.size(); i++) {
-					if (i % 100 == 0) {
-						bw.flush();
+				int cnt = 0;
+				for (String line; (line = br.readLine()) != null; cnt++) {
+					line = line.trim();
+					if (line.isEmpty()) {
+						bw.newLine();
+						continue;
 					}
 
-					bw.write(results.get(i));
+					String result = pepline.process(line);
+					bw.write(result);
 					bw.newLine();
+
+					if (cnt % 1000 == 0) {
+						bw.flush();
+					}
 				}
 
 				bw.flush();
