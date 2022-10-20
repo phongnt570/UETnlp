@@ -18,11 +18,11 @@ java -jar uetnlp.jar [options...] [arguments..]
 
 ## Citation
 
-If you use the toolkit for academic work, please cite:
+If you use the word segmenter for academic work, please cite the following paper:
 
-```
-@INPROCEEDINGS{7800279, 
-	author={T. P. Nguyen and A. C. Le}, 
+```bibtex
+@INPROCEEDINGS{UETSegmenter, 
+	author={Nguyen, Tuan-Phong and Le, Anh-Cuong}, 
 	booktitle={2016 IEEE RIVF International Conference on Computing Communication Technologies, Research, Innovation, and Vision for the Future (RIVF)}, 
 	title={A hybrid approach to Vietnamese word segmentation}, 
 	year={2016}, 
@@ -31,5 +31,3 @@ If you use the toolkit for academic work, please cite:
 	month={Nov},
 }
 ```
-
-The approach used in the toolkit is also explained in the paper.
